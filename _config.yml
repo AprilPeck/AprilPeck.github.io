@@ -16,9 +16,10 @@ author: April Peck
 navbar-links:
   About Me: "aboutme"
   Resources:
-    - Getting Started: "getstarted"
+    - Getting started: "getstarted"
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
+    - Table demo: "table-demo"
   Author's home: ""
 
 # --- Logo --- #
