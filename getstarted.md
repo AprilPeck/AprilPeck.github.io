@@ -83,7 +83,7 @@ Note that this was the easy way to *create* your website, but it does come at a 
     
   .gs-header {
     font-size: 2em;
-    font-family: "Bradley Hand", cursive;
+    font-family: "Trattatello", fantasy;
     font-style: bold;
     color: darkblue;
     }
