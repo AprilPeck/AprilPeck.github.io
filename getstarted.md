@@ -10,7 +10,7 @@ Scroll down to see the steps involved, but here is a 40-second video just as a r
 
 ![Installation steps](assets/img/install-steps.gif)
 
-<div class="gs-header" markdown="1">
+<div class="gs-header-01" markdown="1">
 
 ### 1. Fork this project
 
@@ -22,7 +22,7 @@ Fork this project by clicking the __*Fork*__ button at the top right corner of t
 
 </div>
 
-<div class="gs-header" markdown="1">
+<div class="gs-header-01" markdown="1">
 
 ### 2. Rename the project to `<yourusername>.github.io`
 
@@ -34,7 +34,7 @@ Click on __*Settings*__ at the top (the cog icon) and on that page you'll have a
 
 </div>
 
-<div class="gs-header" markdown="1">
+<div class="gs-header-01" markdown="1">
 
 ### 3. Customize your website settings
 
@@ -48,7 +48,7 @@ Note that in the video above only one setting in the `_config.yml` file is edite
 
 </div>
 
-<div class="gs-header" markdown="1">
+<div class="gs-header-01" markdown="1">
 
 ### 4. Congratulations! You have a website!
 
@@ -81,11 +81,11 @@ Note that this was the easy way to *create* your website, but it does come at a 
     font-style: italic;
     }
     
-  .gs-header {
+  .gs-header-01 {
     font-size: 2em;
-    font-family: "Trattatello", fantasy;
+    font-family: "Comic Sans MS", cursive;
     font-style: bold;
-    color: darkblue;
+    color: darkcyan;
     }
     
   </style>
