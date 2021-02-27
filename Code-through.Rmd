@@ -1,0 +1,337 @@
+---
+title: "CPP 527 Code-through"
+author: "April Peck"
+date: "2/16/2021"
+output:
+  rmarkdown::html_document:
+    theme: cerulean
+
+---
+
+```{r setup, include = FALSE, warning = FALSE}
+library( "magrittr" )
+library( "leaflet" )
+```
+
+# Leaflet: Map widget for R
+
+```{r, echo=FALSE, fig.align="center", fig.cap="Create easy custom interactive maps with the leaflet package in r"}
+gcmap <- leaflet( width = "100%" ) %>%
+        addTiles() %>%
+        addPopups( -112.1428, 36.0574, popup = "Bright Angel Trail: Rim to rim hike" ) %>%
+        addPopups( -112.6974, 36.2549, popup = "Havasu Falls" ) %>%
+        addPopups( -111.8221, 36.03966, popup = "Desert View Watchtower" ) %>%
+        setView( -112.1401, 36.0544, zoom = 9.5 )
+
+gcmap
+```
+
+<br><br>
+Leaflet is a package that makes it easy to add interactive maps to your R projects using a widget. You can include markers of various types (shapes, markers, etc.) including popup information for each marker. There is so much you can do with leaflet, but for this code-through we will focus on adding maps and markers with popups.  
+
+***
+### Install and load packages  
+
+To begin, you will need to install and load the package "leaflet". I also used the package "magrittr" to add layers through the pipe operator.  
+
+```{r, echo = TRUE, warning = FALSE}
+
+install.packages( "leaflet" )
+install.packages( "magrittr" )
+library( "leaflet" )
+library( "magrittr" )
+```
+***
+
+### Create the widget
+
+Now let's start creating the widget. If we start with just calling leaflet we get a blank (albeit interactive) gray widget.
+
+
+```{r, echo = TRUE, fig.align="center"}
+leaflet()
+```
+
+
+Let's add a map to the widget. For now, we'll use the default map: OpenStreetMap.
+
+
+```{r, echo=TRUE}
+map <- leaflet() %>%
+       addTiles()
+
+map
+
+```
+
+
+We now have a world map, but it's still kind of useless. Let's zoom into a specific point of interest. Since I live in Flagstaff, let's start there. We will use the latitude and longitude for Flagstaff, and tell the map to zoom in.
+
+
+```{r, echo = TRUE}
+FLGmap <- leaflet() %>%
+          addTiles() %>%
+          setView( -111.653565, 35.207288, zoom = 17 )
+        
+FLGmap
+
+```
+
+
+That may be a little too close. You can use your mouse to zoom out, but let's set the default as zoomed out a little further.
+
+
+```{r, echo=TRUE}
+FLGmap <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 7 )
+        
+FLGmap
+
+```
+
+
+Okay, maybe a little closer than that.
+
+
+```{r, echo=TRUE}
+FLGmap <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 )
+        
+FLGmap
+
+```
+
+
+That looks good. 
+***
+
+### Add markers to the map
+
+
+What if you want to add some points of interest? You can start with some generic markers.
+
+
+```{r, echo=TRUE}
+flagPoleMap <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addMarkers( -111.653565, 35.207288 )
+        
+flagPoleMap
+
+```
+
+
+Great, but what exactly is that point? We can add a popup to the marker so the user can click on the marker to see additional information.
+
+
+```{r, echo=TRUE}
+flagPoleMrkr <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addMarkers( -111.653565, 35.207288, popup = "Site of the original flag pole" )
+        
+flagPoleMrkr
+```
+
+
+That's much better. You could also use addPopups instead of addMarkers so the popup shows right away instead of the marker. 
+
+
+```{r, echo=TRUE}
+flagPolePopup <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addPopups( -111.653565, 35.207288, popup = "Site of the original flag pole" )
+        
+flagPolePopup
+```
+***
+
+### Customize your markers
+
+
+Let's go back to the marker. You can use addAwesomeMarkers and awesomeIcons to customize them so users can identify different markers. Let's try it. 
+
+First, we'll assign the options for the marker, then we'll use it to create the marker. I'm going to add a popup to the marker as well. Library 'fa' means we are using the Font Awesome library for the icons. You can see available icons at [fontawesome.com.](https://www.fontawesome.com)
+
+
+(You could, instead, put the options within the addAwesomeMarkers, but this makes it easier to read/edit.)
+
+
+```{r, echo=TRUE}
+
+flagpole <- awesomeIcons(
+  icon = 'flag',
+  iconColor = 'red',
+  markerColor = "blue",
+  library = 'fa'
+)
+
+hotel <- awesomeIcons(
+        icon = 'ghost',
+        iconColor = 'gray',
+        markerColor = 'black',
+        library = 'fa'
+)
+
+coolMarkerMap <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addAwesomeMarkers( icon = flagpole, -111.653565, 35.207288, popup = "Site of the original flag pole" ) %>%
+        addAwesomeMarkers( icon = hotel, -111.651299, 35.198284, popup = "Weatherford Hotel (haunted)" )
+
+coolMarkerMap
+```
+
+
+Oops, it looks like ghost isn't a valid icon. Let's try something else.
+
+
+```{r, echo=TRUE}
+
+flagpole <- awesomeIcons(
+  icon = 'flag',
+  iconColor = 'red',
+  markerColor = "blue",
+  library = 'fa'
+)
+
+hotel <- awesomeIcons(
+        icon = 'hotel',
+        iconColor = 'gray',
+        markerColor = 'black',
+        library = 'fa'
+)
+
+coolMarkerMap <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addAwesomeMarkers( icon = flagpole, -111.653565, 35.207288, popup = "Site of the original flag pole" ) %>%
+        addAwesomeMarkers( icon = hotel, -111.651299, 35.198284, popup = "Weatherford Hotel (haunted)" )
+
+coolMarkerMap
+```
+
+
+Now the user has an idea what the marker represents, and can click on it for more details.
+
+***
+### Add shapes to the map
+
+
+Let's look at one more way you can mark locations on the map: shapes. For this example, we will use circles, but almost every shape you can think of is available. For now, I'm just going to convert the existing markers to circles.
+
+
+```{r, echo=TRUE}
+
+circleMap <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addCircleMarkers( -111.653565, 35.207288, popup = "Site of the original flag pole" ) %>%
+        addCircleMarkers( -111.651299, 35.198284, popup = "Weatherford Hotel (haunted)" )
+
+circleMap
+```
+
+
+We can customize the size, border weight, and color of the circles with a few options.
+
+
+```{r, echo=TRUE}
+
+circleMapOptns <- leaflet() %>%
+        addTiles() %>%
+        setView( -111.653565, 35.207288, zoom = 13 ) %>%
+        addCircleMarkers( -111.653565, 35.207288, popup = "Site of the original flag pole", weight = 1, color = "darkred", radius = 15 ) %>%
+        addCircleMarkers( -111.651299, 35.198284, popup = "Weatherford Hotel (haunted)", weight = 3, color = "darkblue", radius = 10 )
+
+circleMapOptns
+```
+***
+
+### Using data on the map
+
+So how can this package be useful for data scientists? You can use a data frame or a table to easily add multiple points on the map. For an example, let's create a quick data frame with earthquakes in Flagstaff between 1776 and 1980. This data is taken from [USGS](https://pubs.usgs.gov/mf/1852/plate-1.pdf).
+
+
+```{r}
+
+earthquakes <- data.frame( "Lat" = c( 35.3, 35.2, 35.2 ),
+                           "Long" = c( -111.64, -111.7, -111.6 ),
+                           "Data" = c( "1972-04-20","1906-01-25","1892-02-02" ),
+                           "Intensity" = c( 75,38,343 )
+)
+
+earthquakes
+```
+
+
+Now that we have the data, let's add markers on the map. Let's base the size of the circle on the intensity. Those intensities are a bit large to use directly, so we'll divide by 15 to make the size more compatible with the map. I'm also going to use the date for the popup.
+
+```{r, echo=TRUE}
+
+quakemap <- leaflet() %>%
+        addTiles() %>%     
+        setView( -111.653565, 35.207288, zoom = 10 ) %>%
+        addCircleMarkers( lng = earthquakes$Long, lat = earthquakes$Lat, popup = earthquakes$Data, weight = 3, radius = earthquakes$Intensity/15, color = "red" )
+
+quakemap
+```
+***
+
+### Changing the background tiles and adding overlays
+
+
+One last thing before we finish up. You don't have to use the default tile. Leaflet includes a good number of tiles, and there are countless others available online. You can add them using addProviderTiles. You can see a list of all included maps with names(providers). I'm going to truncate the list, but there are 164 in the full list.
+
+
+```{r}
+
+names(providers) %>% head(10)
+
+```
+
+
+Let's use a watercolor background.
+
+
+```{r}
+watercolormap <- leaflet() %>%
+        addProviderTiles( "Stamen.Watercolor" ) %>%
+        setView( -111.653565, 35.207288, zoom = 10 )
+        
+watercolormap
+```
+
+
+You can also add layers to the map. Let's zoom out a bit and add the OpenRailwayMap tile over the watercolor tile.
+
+
+```{r}
+
+railwaymap <- leaflet() %>%
+        addProviderTiles( "Stamen.Watercolor" ) %>%
+        addProviderTiles( "OpenRailwayMap" ) %>%
+        setView( -111.653565, 35.207288, zoom = 6 )
+        
+railwaymap
+```
+***
+
+### Explore more options
+
+
+We have barely touched the surface of what you can do with leaflet. It is fun to play with and learn about the many things I haven't talked about with a Google search. Go ahead - try it out for yourself!
+
+***
+Sources:  
+https://rstudio.github.io/leaflet/  
+https://www.rdocumentation.org/packages/leaflet/versions/2.0.4.1/topics/addControl  
+https://pubs.usgs.gov/mf/1852/plate-1.pdf  
+https://cfss.uchicago.edu/notes/leaflet/  
+https://www.r-graph-gallery.com/180-change-background-in-leaflet-map.html  
+https://www.r-graph-gallery.com/179-show-a-map-with-leaflet-r.html  
+https://cyberhelp.sesync.org/leaflet-in-R-lesson/  
