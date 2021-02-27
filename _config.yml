@@ -15,7 +15,7 @@ author: April Peck
 
 navbar-links:
   About Me: "aboutme"
-  Code Through: /code-through.html
+  Code Through: "code-through"
   Resources:
     - Getting started: "getstarted"
     - Beautiful Jekyll: "https://beautifuljekyll.com"
